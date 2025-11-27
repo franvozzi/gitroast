@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Flame, Github, AlertTriangle, Terminal, Zap, Share2, Copy, Skull } from "lucide-react";
+import { Flame, Github, AlertTriangle, Zap, Share2, Copy, Skull } from "lucide-react";
 
 interface RoastData {
   score: number;
@@ -51,8 +51,12 @@ export default function Home() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
       setData(result);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
     } finally {
       setLoading(false);
     }

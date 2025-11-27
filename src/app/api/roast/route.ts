@@ -18,12 +18,13 @@ export async function POST(req: Request) {
             // 2. Extraer usuario y repo de la URL
             const match = repoUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
             if (!match) throw new Error("Formato de URL incorrecto");
-            const [_, owner, repo] = match;
+            const [, owner, repo] = match;
 
             // 3. Obtener datos de GitHub (Repo info + Commits)
-            const headers = process.env.GITHUB_TOKEN
-                ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
-                : {};
+            const headers: Record<string, string> = {};
+            if (process.env.GITHUB_TOKEN) {
+                headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+            }
 
             const [repoData, commitData] = await Promise.all([
                 fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers }).then(r => r.json()),
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
 
             // Preparar los mensajes de commit para el prompt
             const commitMessages = Array.isArray(commitData)
-                ? commitData.map((c: any) => `- "${c.commit.message}" (${c.commit.author.name})`).join('\n')
+                ? commitData.map((c: { commit: { message: string; author: { name: string } } }) => `- "${c.commit.message}" (${c.commit.author.name})`).join('\n')
                 : "No se pudieron leer los commits.";
 
             // 4. Configurar Gemini 1.5 Flash
@@ -81,15 +82,16 @@ export async function POST(req: Request) {
 
             return NextResponse.json(roast);
 
-        } catch (apiError: any) {
+        } catch (apiError: unknown) {
             console.error("⚠️ Error interno:", apiError);
+            const errorMessage = apiError instanceof Error ? apiError.message : String(apiError);
             return NextResponse.json({
                 error: 'Error procesando el roast.',
-                details: apiError.message
+                details: errorMessage
             }, { status: 500 });
         }
 
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: 'Error del servidor' }, { status: 500 });
     }
 }
