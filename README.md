@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔥 GitRoast
 
-## Getting Started
+> The AI that judges your code without mercy.
 
-First, run the development server:
+![Project Status](https://img.shields.io/badge/Status-MVP_Complete-success)
+![AI Model](https://img.shields.io/badge/AI-Gemini_2.0_Flash_Lite-blue)
+![Stack](https://img.shields.io/badge/Stack-Next.js_14_+_Tailwind-black)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A web application that uses **Google Gemini 2.0 Flash Lite** to analyze GitHub repositories in real-time, critique code quality, detect "Red Flags", and generate reports with acid (and sometimes cruel) humor.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend:** Next.js 14 (App Router) + React
+- **Styling:** Tailwind CSS (Cyberpunk UI)
+- **Intelligence:** Google Gemini API (`gemini-2.0-flash-lite-001`)
+- **Data Source:** GitHub REST API
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Local Installation
 
-## Learn More
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/git-roast.git
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Configure environment variables: Create a `.env.local` file and add:
+   ```env
+   GEMINI_API_KEY=your_google_ai_api_key
+   GITHUB_TOKEN=your_optional_token_for_rate_limit
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Run the server:
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+## 🤖 Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Dual Mode:** Choose between "Spicy" (Sarcastic) or "Nuclear" (Destructive).
+- **Real Analysis:** Reads repo metadata and latest commits.
+- **JSON Mode:** Structured and consistent responses thanks to Gemini Flash.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
